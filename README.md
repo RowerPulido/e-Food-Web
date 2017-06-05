@@ -5,4 +5,5 @@ e-Food
 Colaboradores : 
 
 Jorge Pulido | jorgepulidotrujillo@gmail.com | rowerpulido
+
 Alan Garcia | palomitasdearroz@gmail.com | Lou-Zar(Git) | Lou Zar(Discord) | 661 123 3031
