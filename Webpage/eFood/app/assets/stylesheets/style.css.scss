@@ -5,18 +5,27 @@
 @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 
 /* Necesario para poner la lupa en la busqueda */
-.fas input { text-indent: 32px;}
+.fas input { text-indent: 18px;}
+
 .fas { 
   position: relative;
   color: #aaa;
 }
 
-.fas fa-search{
+.fas span{
 	position: absolute;
-	top: 10px;
+	top: 11px;
 	left: 10px;
 }
 
+/* Color de los botones, quitar .btn-primary de la clase para que .orange tenga efecto */
+.orange{
+	background-color: #f47a14;
+	border-color: #f47a14;
+	color: white;
+	margin-right: 50px;
+	margin-left: 50px;
+}
 
 /* Cambiar color del placeholder en la busqueda */
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */ /* !important needed to overrride other properties*/
