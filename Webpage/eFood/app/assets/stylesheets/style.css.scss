@@ -1,0 +1,67 @@
+// Place all the styles related to the Welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+
+/* Necesario para poner la lupa en la busqueda */
+.fas input { text-indent: 18px;}
+
+.fas { 
+  position: relative;
+  color: #aaa;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+
+.fas span{
+	position: absolute;
+	top: 11px;
+	left: 10px;
+}
+
+/* Elimina padding de la barra de busqueda */
+.navbar{
+	padding-top:0px !important;
+	padding-bottom: 0px !important;
+}
+
+/* Necesario para corregir la posicion vertical de la lupa en la caja de busqueda */
+.fa{
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+}
+
+/* Color de los botones, quitar .btn-primary de la clase para que .orange tenga efecto */
+.orange{
+	background-color: #f47a14;
+	border-color: #f47a14;
+	color: white;
+	margin-right: 50px;
+	margin-left: 50px;
+}
+
+/* Imagen logo en Barra de Navegacion */
+.logo{
+	margin-left: 50px;
+	height: 60px;
+}
+
+/* Cambiar color del placeholder en la busqueda */
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */ /* !important needed to overrride other properties*/
+    color:   #aaa !important;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #aaa !important;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #aaa !important;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #aaa !important;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #aaa !important;
+}
