@@ -10,12 +10,26 @@
 .fas { 
   position: relative;
   color: #aaa;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
 }
 
 .fas span{
 	position: absolute;
 	top: 11px;
 	left: 10px;
+}
+
+/* Elimina padding de la barra de busqueda */
+.navbar{
+	padding-top:0px !important;
+	padding-bottom: 0px !important;
+}
+
+/* Necesario para corregir la posicion vertical de la lupa en la caja de busqueda */
+.fa{
+	padding-top: .5rem;
+	padding-bottom: .5rem;
 }
 
 /* Color de los botones, quitar .btn-primary de la clase para que .orange tenga efecto */
@@ -25,6 +39,12 @@
 	color: white;
 	margin-right: 50px;
 	margin-left: 50px;
+}
+
+/* Imagen logo en Barra de Navegacion */
+.logo{
+	margin-left: 50px;
+	height: 60px;
 }
 
 /* Cambiar color del placeholder en la busqueda */
