@@ -1,0 +1,171 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+  <title>Navbar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .navbar-default {
+      background-color: #f7f7f7;
+      height: 6%;
+    }
+
+    .navbar-brand {
+      position: relative;
+      z-index: 2;
+    }
+
+    .navbar-brand {
+      width: 10%;
+      height: 10%;
+    }
+
+    .brand img {
+      margin-top: 2%;
+      margin-right: 5px;
+      margin-left: 5px;
+    }
+
+    #Logo {
+      height: 90%;
+      width: 100%;
+    }
+    /*Search bar */
+
+    #demo-2 {
+      margin-top: 1.5%;
+    }
+
+    #search1 {
+      outline: none;
+    }
+
+    #search1[type=search] {
+      -webkit-appearance: textfield;
+      -webkit-box-sizing: content-box;
+      font-family: inherit;
+      font-size: 100%;
+    }
+
+    #search1::-webkit-search-decoration,
+    #search1::-webkit-search-cancel-button {
+      display: none;
+    }
+
+    #search1[type=search] {
+      background: #ededed url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+      border: solid 1px #ccc;
+      padding: 9px 10px 9px 32px;
+      width: 55px;
+      -webkit-border-radius: 10em;
+      -moz-border-radius: 10em;
+      border-radius: 10em;
+      -webkit-transition: all .5s;
+      -moz-transition: all .5s;
+      transition: all .5s;
+    }
+
+    #search1[type=search]:focus {
+      width: 130px;
+      background-color: #fff;
+      border-color: #66CC75;
+      -webkit-box-shadow: 0 0 5px rgba(109, 207, 246, .5);
+      -moz-box-shadow: 0 0 5px rgba(109, 207, 246, .5);
+      box-shadow: 0 0 5px rgba(109, 207, 246, .5);
+    }
+
+    #search1:-moz-placeholder {
+      color: #999;
+    }
+
+    input::-webkit-input-placeholder {
+      color: #999;
+    }
+
+    #demo-2 input[type=search] {
+      width: 15px;
+      padding-left: 10px;
+      color: transparent;
+      cursor: pointer;
+    }
+
+    #demo-2 input[type=search]:hover {
+      background-color: #fff;
+    }
+
+    #demo-2 input[type=search]:focus {
+      width: 130px;
+      padding-left: 32px;
+      color: #000;
+      background-color: #fff;
+      cursor: auto;
+    }
+
+    #demo-2 input:-moz-placeholder {
+      color: transparent;
+    }
+
+    #demo-2 input::-webkit-input-placeholder {
+      color: transparent;
+    }
+    /*Botones*/
+
+    .btn.btn-circle {
+      border-radius: 5px;
+      margin-top: 7px;
+      width: 100%;
+      height: 50%;
+      background-color: #f7f7f7;
+    }
+
+    .lipu {
+      margin-right: 10px;
+    }
+
+    .navbar .nav-collapse {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0;
+      padding-right: 120px;
+      padding-left: 80px;
+      width: 100%;
+    }
+  </style>
+  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-default ">
+    <div class="container">
+      <div class="navbar-header col-xs-2">
+        <button type="button" class="navbar-toggle"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+        <a class="brand" href="#">
+          <img src="Logos/eFood_Final.png" id="Logo"> </a>
+      </div>
+      <!--Search Bar-->
+      <div class="col-md-4">
+        <form id="demo-2">
+          <input placeholder="Search" id="search1" type="search"> </form>
+      </div>
+      <div class="collapse navbar-collapse col-xs-4 offset-xs-4">
+        <ul class="nav navbar-nav ">
+          <li class="lipu">
+            <a class="btn btn-default btn-outline btn-circle collapsed" data-toggle="collapse" href="#nav-collapse4" aria-expanded="false" aria-controls="nav-collapse4">Sign In <i class=""></i> </a>
+          </li>
+          <li class="lipu">
+            <a class="btn btn-default btn-outline btn-circle collapsed" data-toggle="collapse" href="#nav-collapse4" aria-expanded="false" aria-controls="nav-collapse4">Sign Up <i class=""></i> </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</body>
+
+</html>
