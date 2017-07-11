@@ -23,6 +23,7 @@ gem 'coffee-rails', '~> 4.2'
 
 gem 'bootstrap', git: 'https://github.com/twbs/bootstrap-rubygem'
 gem 'sprockets-rails', '>= 2.3.2'
+
 gem 'jquery-rails'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
