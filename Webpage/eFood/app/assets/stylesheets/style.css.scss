@@ -5,7 +5,7 @@
 @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 
 /* Necesario para poner la lupa en la busqueda */
-.fas input { text-indent: 18px;}
+.fas input { text-indent: 18px; }
 
 .fas { 
   position: relative;
@@ -43,8 +43,8 @@
 
 /* Imagen logo en Barra de Navegacion */
 .logo{
-	margin-left: 50px;
-	height: 60px;
+	margin-left: 10%;
+	width: 11%;
 }
 
 /* Cambiar color del placeholder en la busqueda */
@@ -64,4 +64,12 @@
 }
 ::-ms-input-placeholder { /* Microsoft Edge */
    color:    #aaa !important;
+}
+
+
+
+/* *** LOGIN PAGE *** */
+.loginbg{
+	background-image: url(login-bg.jpg);
+	background-size: 100%;
 }
