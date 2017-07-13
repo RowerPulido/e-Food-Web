@@ -71,15 +71,17 @@
 /* *** LOGIN PAGE *** */
 .loginbg{
 	background-image: url(login-bg.jpg);
-	background-size: 100%;
+	background-size: 105%;
 }
 
 .login{
-	background-color: black;
-	opacity: .6;
+	background: rgb(0, 0, 0);
+	background: rgba(0, 0, 0, 0.6);
 }
 
 .login-fields{
 	width: 86%;
 	margin-top: 2%;
+	font-family: 'Courier New';
+	color: white;
 }

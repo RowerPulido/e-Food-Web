@@ -1,25 +1,30 @@
 <%= render '/public/navbar' %>
 
 <div class='loginbg'>
+	<p class="text-center text-white" style="padding-top: 100px; font-family: 'Courier New'; font-size: 50px; font-weight: 100">COME DONDE QUIERAS</p>
+	<br>
+	<form style='margin-left: 33%; margin-right: 33%;padding-bottom: 125px;'>
+		<div class="login">
+			<div style="padding-left: 7%; padding-right: 7%;" align="center">
+				<br>
+				<h2 class="text-center text-white">INICIA SESIÓN</h2>
+				<br>
+   				<label class='login-fields'><b>Correo Electronico</b></label>
+   				<input class='login-fields' type="text" placeholder="Usuario" name="uname" style="color: black" required>
+   				<br>
+	    		<label class='login-fields'><b>Contraseña</b></label>
+   				<input class='login-fields' type="password" placeholder="Contraseña" name="psw" style="color: black" required>
+   				<br>
 
-
-	<div>
-		<h2 class="text-center text-white" style="padding-top: 125px;">COME DONDE QUIERAS</h2>
-		<form style='margin-left: 35%; margin-right: 35%;'>
-			<div class="login">
-				<div style="padding-left: 7%; padding-right: 7%;" align="center">
-    				<label class='login-fields'><b>Usuario</b></label>
-    				<input class='login-fields' type="text" placeholder="Usuario" name="uname" required>
-    				<br>
-		    		<label class='login-fields'><b>Contraseña</b></label>
-    				<input class='login-fields' type="password" placeholder="Contraseña" name="psw" required>
-    				<br>
-
-		    		<button type="submit" class="orange btn btn-md" style="margin-left: 0px; margin-right: 0px; margin-top: 8%;">Iniciar Sesion</button>
-		    		<br>
-    				<input type="checkbox" checked="checked"> Recordarme?
+   				<div class="login-fields" style="margin-top: 20px;">
+   					<span style="padding-right: 25%;">
+   						<input type="checkbox" checked="checked"> Recordarme?
+   					</span>
+		    		<button type="submit" class="orange btn btn-md" style="margin-left: 0px; margin-right: 0px;">Entrar</button>
+    			<p class="login-fields">Crear Cuenta</p>
     			</div>
-  			</div>
-		</form>
-	</div>
+    		</div>
+  		</div>
+	</form>
+	<br>
 </div>
