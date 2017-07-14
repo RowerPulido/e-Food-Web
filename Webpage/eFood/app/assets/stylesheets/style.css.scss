@@ -44,8 +44,14 @@
 /* Imagen logo en Barra de Navegacion */
 .logo{
 	margin-left: 10%;
+	width: 30%;
+}
+
+.logoDiv{
+	margin-left: 10%;
 	width: 11%;
 }
+
 
 /* Cambiar color del placeholder en la busqueda */
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */ /* !important needed to overrride other properties*/
