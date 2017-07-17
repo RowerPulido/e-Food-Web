@@ -1,30 +1,24 @@
 <%= render '/public/navbar' %>
-
+ <!-- Fondo de Aplicacion -->
 <div class='loginbg'>
-	<p class="text-center text-white" style="padding-top: 100px; font-family: 'Courier New'; font-size: 50px; font-weight: 100">COME DONDE QUIERAS</p>
-	<br>
-	<form style='margin-left: 33%; margin-right: 33%;padding-bottom: 125px;'>
-		<div class="login">
-			<div style="padding-left: 7%; padding-right: 7%;" align="center">
-				<br>
-				<h2 class="text-center text-white">INICIA SESIÓN</h2>
-				<br>
-   				<label class='login-fields'><b>Correo Electronico</b></label>
-   				<input class='login-fields' type="text" placeholder="Usuario" name="uname" style="color: black" required>
-   				<br>
-	    		<label class='login-fields'><b>Contraseña</b></label>
-   				<input class='login-fields' type="password" placeholder="Contraseña" name="psw" style="color: black" required>
-   				<br>
+	<p class="responsive-font text-center text-white" style="padding-top: 70px; font-family: 'Courier New'; font-size: 70px; font-weight: 100">COME DONDE QUIERAS</p>
 
-   				<div class="login-fields" style="margin-top: 20px;">
-   					<span style="padding-right: 25%;">
-   						<input type="checkbox" checked="checked"> Recordarme?
-   					</span>
-		    		<button type="submit" class="orange btn btn-md" style="margin-left: 0px; margin-right: 0px;">Entrar</button>
-    			<p class="login-fields">Crear Cuenta</p>
-    			</div>
+	 <!-- Inicio del formulario Inicio de Sesion -->
+	<form class='form-login responsive'>
+		<div class="login" align="center">
+			<h2 class="text-center text-white spacing">INICIA SESIÓN</h2>
+   			<label class='login-fields'><b>Correo Electronico</b></label>
+			<input class='login-fields' type="text" placeholder="Usuario" name="uname" style="color: black; margin-bottom: 25px;" required>
+    		<label class='login-fields'><b>Contraseña</b></label>   				
+    		<input class='login-fields' type="password" placeholder="Contraseña" name="psw" style="color: black" required>
+
+   			<div class="login-fields" style="margin-top: 20px;">
+   			<div>
+				<input type="checkbox" align="left" checked="checked"> Recordarme?
+	    		<button type="submit" class="orange btn btn-md pull-right login-fields spacing" style="margin-left: 0px; margin-right: 0px;">Entrar</button>
+	    	</div>
+	    		<%= link_to "Crear Cuenta", login_path, :class=>'login-fields spacing', :style=>'color: #f47a14; padding-top:10px;' %>
     		</div>
   		</div>
 	</form>
-	<br>
 </div>

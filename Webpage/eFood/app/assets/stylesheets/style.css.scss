@@ -22,6 +22,8 @@
 
 /* Elimina padding de la barra de busqueda */
 .navbar{
+	margin-left: 5%;
+	margin-right: 5%;
 	padding-top:0px !important;
 	padding-bottom: 0px !important;
 }
@@ -37,14 +39,11 @@
 	background-color: #f47a14;
 	border-color: #f47a14;
 	color: white;
-	margin-right: 50px;
-	margin-left: 50px;
 }
 
 /* Imagen logo en Barra de Navegacion */
 .logo{
-	margin-left: 10%;
-	width: 11%;
+	height: 46px;
 }
 
 /* Cambiar color del placeholder en la busqueda */
@@ -71,17 +70,48 @@
 /* *** LOGIN PAGE *** */
 .loginbg{
 	background-image: url(login-bg.jpg);
-	background-size: 105%;
+	background-size: cover;
+	-webkit-background-origin:border;
 }
 
 .login{
 	background: rgb(0, 0, 0);
 	background: rgba(0, 0, 0, 0.6);
+	padding-left: 7%; 
+	padding-right: 7%;
 }
 
 .login-fields{
-	width: 86%;
-	margin-top: 2%;
+	width: 100%;
 	font-family: 'Courier New';
 	color: white;
+}
+
+/* Clase para forma del inicio de sesion */ 
+.form-login{
+	margin-left: 33%;
+	margin-right: 33%;
+	padding-bottom: 125px;
+}
+
+/* Responsiveness */
+@media only screen and (max-width: 750px) {
+    /* For mobile phones: */
+    [class*='responsive'] {
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    /* For mobile phones: */
+    [class*='responsive-font'] {
+        font-size: 6.35vw!important;
+    }
+}
+
+/* Clase Comun de espaciado para elementos */
+.spacing{
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
