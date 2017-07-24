@@ -1,24 +1,38 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <%= render '/public/navbar' %>
  <!-- Fondo de Aplicacion -->
 <div class='loginbg'>
-	<p class="responsive-font text-center text-white" style="padding-top: 70px; font-family: 'Courier New'; font-size: 70px; font-weight: 100">COME DONDE QUIERAS</p>
+	<p class="responsive-font responsive-font-title text-center text-white" style="padding-top: 70px; font-size: 70px;"">COME DONDE QUIERAS</p>
 
 	 <!-- Inicio del formulario Inicio de Sesion -->
 	<form class='form-login responsive'>
 		<div class="login" align="center">
-			<h2 class="text-center text-white spacing">INICIA SESIÓN</h2>
+			<h3 class="text-center text-white spacing">INICIA SESIÓN</h3>
    			<label class='login-fields'><b>Correo Electronico</b></label>
 			<input class='login-fields' type="text" placeholder="Usuario" name="uname" style="color: black; margin-bottom: 25px;" required>
     		<label class='login-fields'><b>Contraseña</b></label>   				
     		<input class='login-fields' type="password" placeholder="Contraseña" name="psw" style="color: black" required>
 
    			<div class="login-fields" style="margin-top: 20px;">
-   			<div>
-				<input type="checkbox" checked="checked"> Recordarme?
-	    		<button type="submit" class="orange btn btn-md pull-right login-fields spacing" style="margin-left: 0px; margin-right: 0px;">Entrar</button>
+   				<div style="float: left;">
+					<input type="checkbox" checked="checked"> Recordarme?
+				</div>
+
+				<div style="float: right;">
+				<%= link_to "Olvide Mi Contraseña", root_path, :style=>'color: #f47a14;' %>
+				</div>
+   			<!-- Padding para que "Crear cuenta" no se meta entre los botones, <br> para que "Crear cuenta" este centrado -->
+				<div style='padding-bottom: 70px;'><br>
+				<!-- Padding para que el boton de Facebook se muestre en linea -->
+					<div style="padding-right: 45px;">
+	    				<button type="submit" class="orange btn btn-md login-fields spacing margin" style="float: left;">Entrar</button>
+	    			</div>
+	    			<%= image_tag('facebook.png', style: 'height: 40px; float: right;', class: 'margin') %>
+	    		</div>
+
+	    			<%= link_to "Crear Cuenta", signup_path, :style=>'color: #f47a14;' %>
 	    	</div>
-	    		<%= link_to "Crear Cuenta", signup_path, :class=>'login-fields spacing', :style=>'color: #f47a14; padding-top:10px;' %>
-    		</div>
   		</div>
 	</form>
 </div>
