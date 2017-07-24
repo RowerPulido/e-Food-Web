@@ -1,3 +1,3 @@
 class Payment < ApplicationRecord
-  belongs_to :clients
+  belongs_to :client, dependent: :destroy
 end
