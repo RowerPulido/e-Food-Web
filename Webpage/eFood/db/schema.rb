@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170719182158) do
+ActiveRecord::Schema.define(version: 20170724184130) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "client_id"
@@ -23,9 +23,63 @@ ActiveRecord::Schema.define(version: 20170719182158) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "branch_offices", force: :cascade do |t|
+    t.integer  "admin_id"
+    t.integer  "brand_id"
+    t.string   "name"
+    t.string   "address"
+    t.string   "zone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "brands", force: :cascade do |t|
+    t.integer  "owner_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "clients", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer  "client_id"
+    t.integer  "dish_id"
+    t.string   "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "dishes", force: :cascade do |t|
+    t.integer  "branch_offices_id"
+    t.string   "name"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  create_table "evaluations", force: :cascade do |t|
+    t.integer  "client_id"
+    t.integer  "dish_id"
+    t.integer  "calification"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "order_details", force: :cascade do |t|
+    t.integer  "order_id"
+    t.integer  "dish_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "client_id"
+    t.integer  "total_amount"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "payments", force: :cascade do |t|
