@@ -102,7 +102,7 @@
 }
 
 /* Responsiveness for most elements */
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 500px) {
     /* For mobile phones: */
     [class*='responsive-font-title'] {
         margin-left: 7%!important;
@@ -112,7 +112,7 @@
 }
 
 /* Responsiveness for title login */
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 500px) {
     /* For mobile phones: */
     [class*='responsive'] {
         margin-left: 15%;
@@ -121,7 +121,7 @@
 }
 
 /* Responsiveness for autoadjust of text based on screen size */
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 500px) {
     /* For mobile phones: */
     [class*='responsive-font'] {
         font-size: 7.7vw!important;
