@@ -1,4 +1,4 @@
 class Evaluation < ApplicationRecord
-  has_many :clients, dependent: :destroy
-  has_many :dishes, dependent: :destroy
+  belongs_to :client, dependent: :destroy
+  belongs_to :dishes, dependent: :destroy
 end
