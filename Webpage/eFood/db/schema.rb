@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 20170724184130) do
 
   create_table "addresses", force: :cascade do |t|
-    t.string   "client_id"
+    t.integer  "client_id"
     t.string   "street"
     t.string   "city"
     t.string   "state"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20170724184130) do
   end
 
   create_table "clients", force: :cascade do |t|
+    t.string   "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -55,7 +56,10 @@ ActiveRecord::Schema.define(version: 20170724184130) do
 
   create_table "dishes", force: :cascade do |t|
     t.integer  "branch_offices_id"
+    t.integer  "preparation_time"
+    t.integer  "price"
     t.string   "name"
+    t.string   "size"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
@@ -83,7 +87,7 @@ ActiveRecord::Schema.define(version: 20170724184130) do
   end
 
   create_table "payments", force: :cascade do |t|
-    t.string   "client_id"
+    t.integer  "client_id"
     t.string   "name"
     t.string   "street"
     t.string   "city"
@@ -98,12 +102,13 @@ ActiveRecord::Schema.define(version: 20170724184130) do
   end
 
   create_table "sellers", force: :cascade do |t|
-    t.string   "user_id"
-    t.string   "id_office"
+    t.integer  "user_id"
+    t.integer  "branch_office_id"
+    t.integer  "brand_id"
     t.string   "RFC"
-    t.string   "CLAVE"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "CLABE"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "users", force: :cascade do |t|
