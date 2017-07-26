@@ -10,4 +10,9 @@ class WelcomeController < ApplicationController
 	def login
 
 	end
+
+# Borrar cuando se tenga la tabla de pedidos!
+	def pedido
+
+	end
 end

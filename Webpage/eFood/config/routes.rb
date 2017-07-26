@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root 'welcome#home'
   get 'signup', to: 'welcome#new'
   get 'login', to: 'welcome#login'
+  get 'carro', to: 'welcome#pedido'
 end

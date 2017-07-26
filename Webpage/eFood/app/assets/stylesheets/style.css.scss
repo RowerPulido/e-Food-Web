@@ -129,13 +129,29 @@
 }
 
 /* Clase Comun de espaciado para elementos */
+
+/* Agregarle espaciado a tus elementos */
 .spacing{
 	padding-top: 20px;
 	padding-bottom: 20px;
 }
 
+/* Espaciado a tus elementos */
 .margin{
 	margin-top: 15px;
 	margin-bottom: 15px;
 }
+
+/* Para textos color naranja y negritas */
+.colored-text {
+	font-weight:bold;
+	color:#f47a14;
+}
+
 /* *** FIN LOGIN PAGE *** */
+
+
+/* *** Carrito de Compra *** */
+.food-img{
+	width: 150px;
+}
