@@ -23,16 +23,6 @@ ActiveRecord::Schema.define(version: 20170724184130) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "branch_offices", force: :cascade do |t|
-    t.integer  "admin_id"
-    t.integer  "brand_id"
-    t.string   "name"
-    t.string   "address"
-    t.string   "zone"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "brands", force: :cascade do |t|
     t.integer  "owner_id"
     t.string   "name"
@@ -55,13 +45,12 @@ ActiveRecord::Schema.define(version: 20170724184130) do
   end
 
   create_table "dishes", force: :cascade do |t|
-    t.integer  "branch_offices_id"
+    t.integer  "kitchen_id"
     t.integer  "preparation_time"
     t.integer  "price"
     t.string   "name"
-    t.string   "size"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "evaluations", force: :cascade do |t|
@@ -72,9 +61,21 @@ ActiveRecord::Schema.define(version: 20170724184130) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "kitchens", force: :cascade do |t|
+    t.integer  "admin_id"
+    t.integer  "brand_id"
+    t.string   "name"
+    t.string   "address"
+    t.string   "zone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "order_details", force: :cascade do |t|
     t.integer  "order_id"
     t.integer  "dish_id"
+    t.integer  "price"
+    t.integer  "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -103,18 +104,19 @@ ActiveRecord::Schema.define(version: 20170724184130) do
 
   create_table "sellers", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "branch_office_id"
+    t.integer  "kitchen_id"
     t.integer  "brand_id"
     t.string   "RFC"
     t.string   "CLABE"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
     t.string   "name"
     t.string   "last_name"
+    t.string   "cellphone"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "password_digest"
