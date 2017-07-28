@@ -22,7 +22,7 @@ class ApisController < ApplicationController
           @json.set! :name, client.user.name
           @json.set! :last_name, client.user.last_name
           @json.set! :cellphone, client.user.cellphone
-          @json.set! :Payment do
+          @json.set! :Payments do
             @json.array! client.payments do |p|
               @json.set! :name, p.name
               @json.set! :street, p.street
@@ -31,6 +31,16 @@ class ApisController < ApplicationController
               @json.set! :postal_code, p.postal_code
               @json.set! :country, p.country
               @json.set! :card_number, p.card_number
+              @json.set! :expiry_date, p.expiry_date
+            end
+          end
+          @json.set! :Addresses do
+            @json.array! client.addresses do |a|
+              @json.set! :street, a.street
+              @json.set! :city, a.city
+              @json.set! :state, a.state
+              @json.set! :postal_code, a.postal_code
+              @json.set! :country, a.country
             end
           end
         end
@@ -40,6 +50,21 @@ class ApisController < ApplicationController
         @json.set! :status, 1
         @json.set! :message, "User not found"
       end
+    end
+  end
+  
+  def get_dishes_by_tag
+    @json=Jbuilder.new
+    if tag=DishesTag.find_by(id: params[:tag_id])
+      @json.set! :status, 0
+      @json.set! :Tag do 
+        @json.set! :name, tag.name
+        @json.set! :Dishes do 
+          @json.array! Ta
+        end
+      end
+    else
+      
     end
   end
   

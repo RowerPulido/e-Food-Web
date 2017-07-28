@@ -1,3 +1,3 @@
-class Address < ApplicationRecord
-  belongs_to :clients
+class Address < ActiveRecord::Base
+  belongs_to :client
 end

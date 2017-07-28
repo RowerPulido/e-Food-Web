@@ -1,7 +1,7 @@
 class CreateKitchens < ActiveRecord::Migration[5.0]
   def change
     create_table :kitchens do |t|
-      t.integer :admin_id
+      t.integer :seller_id
       t.integer :brand_id
       t.string :name
       t.string :address

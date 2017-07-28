@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724184130) do
+ActiveRecord::Schema.define(version: 20170728160614) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "client_id"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20170724184130) do
   end
 
   create_table "brands", force: :cascade do |t|
-    t.integer  "owner_id"
+    t.integer  "seller_id"
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -53,6 +53,13 @@ ActiveRecord::Schema.define(version: 20170724184130) do
     t.datetime "updated_at",       null: false
   end
 
+  create_table "dishes_tags", force: :cascade do |t|
+    t.integer  "dish_id"
+    t.integer  "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "evaluations", force: :cascade do |t|
     t.integer  "client_id"
     t.integer  "dish_id"
@@ -62,7 +69,7 @@ ActiveRecord::Schema.define(version: 20170724184130) do
   end
 
   create_table "kitchens", force: :cascade do |t|
-    t.integer  "admin_id"
+    t.integer  "seller_id"
     t.integer  "brand_id"
     t.string   "name"
     t.string   "address"
@@ -108,6 +115,12 @@ ActiveRecord::Schema.define(version: 20170724184130) do
     t.integer  "brand_id"
     t.string   "RFC"
     t.string   "CLABE"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
