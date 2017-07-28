@@ -111,12 +111,20 @@ ActiveRecord::Schema.define(version: 20170728160614) do
 
   create_table "sellers", force: :cascade do |t|
     t.integer  "user_id"
+<<<<<<< HEAD
+    t.integer  "id_branch_office"
+    t.string   "RFC"
+    t.string   "CLABE"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+=======
     t.integer  "kitchen_id"
     t.integer  "brand_id"
     t.string   "RFC"
     t.string   "CLABE"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+>>>>>>> 6ad289e9feb1633a568b0ce78f157ee1c4aa8875
   end
 
   create_table "tags", force: :cascade do |t|

@@ -5,7 +5,7 @@
 @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 
 /* Necesario para poner la lupa en la busqueda */
-.fas input { text-indent: 18px;}
+.fas input { text-indent: 18px; }
 
 .fas { 
   position: relative;
@@ -43,9 +43,15 @@
 
 /* Imagen logo en Barra de Navegacion */
 .logo{
-	margin-left: 50px;
-	height: 60px;
+	margin-left: 10%;
+	width: 30%;
 }
+
+.logoDiv{
+	margin-left: 10%;
+	width: 11%;
+}
+
 
 /* Cambiar color del placeholder en la busqueda */
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */ /* !important needed to overrride other properties*/
@@ -68,7 +74,48 @@
 
 
 
-/*--------------------------------------------------------------------
-                 |    PARA EL CARRUSEL   |
-                 |                       |
-----------------------------------------------------------------------*/
+/* *** LOGIN PAGE *** */
+.loginbg{
+	background-image: url(login-bg.jpg);
+	background-size: 105%;
+}
+
+.login{
+	background: rgb(0, 0, 0);
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.login-fields{
+	width: 86%;
+	margin-top: 2%;
+	font-family: 'Courier New';
+	color: white;
+}
+
+.center{
+    margin: auto;
+    width: 70%;
+    padding: 10px;
+    text-align: center;
+}
+
+.thumbnail{
+	border: solid 1px black;
+	border-radius: 10px;
+	padding: 10px;
+	text-align: center;
+	background-color: #FFF;
+}
+
+.thmbImg{
+	width: 40%;
+	padding: 5px;
+	border: solid 1px #f47a14;
+	border-radius: 5px;
+}
+
+.grey{
+	background-color: #EEE;
+	border-radius: 5px;
+	padding: 20px;
+}
