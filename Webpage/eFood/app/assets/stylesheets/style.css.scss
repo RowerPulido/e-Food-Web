@@ -24,6 +24,7 @@
 
 /* Elimina padding de la barra de busqueda */
 .navbar{
+	position: fixed;
 	margin-left: 5%;
 	margin-right: 5%;
 	padding-top:0px !important;
@@ -49,7 +50,7 @@
 }
 
 /* Cambiar color del placeholder en la busqueda */
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */ /* !important needed to overrride other properties*/
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */ /* !important needed to override other properties*/
     color:   #aaa !important;
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
@@ -67,9 +68,6 @@
    color:    #aaa !important;
 }
 /* *** FIN BARRA NAVEGACION *** */
-
-
-
 
 
 /* *** LOGIN PAGE *** */
@@ -102,8 +100,7 @@
 }
 
 /* Responsiveness for most elements */
-@media only screen and (max-width: 500px) {
-    /* For mobile phones: */
+@media only screen and (max-width: 641px) {
     [class*='responsive-font-title'] {
         margin-left: 7%!important;
         margin-right: 7%!important;
@@ -112,23 +109,29 @@
 }
 
 /* Responsiveness for title login */
-@media only screen and (max-width: 500px) {
-    /* For mobile phones: */
+@media only screen and (max-width: 641px) {
     [class*='responsive'] {
-        margin-left: 15%;
-        margin-right: 15%;
+        margin-left: 10%!important;
+        margin-right: 10%!important;
+    }
+}
+
+/* Needed to make "Olvidar contraseña" display correctly at < 400px" */
+@media only screen and (max-width: 400px) {
+    [class*='responsive-small'] {
+        float: left!important;
     }
 }
 
 /* Responsiveness for autoadjust of text based on screen size */
-@media only screen and (max-width: 500px) {
-    /* For mobile phones: */
+@media only screen and (max-width: 641px) {
     [class*='responsive-font'] {
         font-size: 7.7vw!important;
     }
 }
+/* *** FIN LOGIN PAGE *** */
 
-/* Clase Comun de espaciado para elementos */
+/* *** Clases Comunes para elementos *** */
 
 /* Agregarle espaciado a tus elementos */
 .spacing{
@@ -148,10 +151,38 @@
 	color:#f47a14;
 }
 
-/* *** FIN LOGIN PAGE *** */
+a.links {
+    color:#000000 !important;
+    text-decoration:none;
+}
+
+.centered{
+	text-align: center;
+}
+
+.main{
+	margin-right: 5%;
+	margin-left: 5%;
+}
+/* *** Fin clases comunes *** */
 
 
 /* *** Carrito de Compra *** */
 .food-img{
 	width: 150px;
 }
+
+@media screen and (max-width: 641px) {
+table {border-color: #f47a14!important; border: 2px solid;}
+thead {display: none;}
+tr:nth-of-type(2n) {background-color: inherit;}
+tr td:first-child {font-weight:bold;font-size:1.3em;}
+tbody td {display: block;  text-align:center;}
+tbody td:before { 
+    content: attr(data-th); 
+    display: block;
+    text-align:center;  
+  }
+}
+
+/* *** Fin Carrito de Compra *** */

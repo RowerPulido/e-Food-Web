@@ -1,16 +1,16 @@
 <h1 align="center"> Tu Carrito </h1>
 
-<div>
-	<p>Volver a eFood</p>
+<div class="main responsive">
+	<%= link_to "<- Volver a eFood", root_path, class: 'links'%>
 	<p class="colored-text">Resumen</p>
 	<div align="center">
-		<table>
+		<table style="width: 100%">
 			<thead>
 				<tr>
 					<th></th>
-					<th class="colored-text">Platillo</th>
-					<th class="colored-text">Cantidad</th>
-					<th class="colored-text">Precio</th>
+					<th class="colored-text centered">Platillo</th>
+					<th class="colored-text centered">Cantidad</th>
+					<th class="colored-text centered">Precio</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -20,9 +20,9 @@
 					<td><%= image_tag('quesadilla.jpg', class: 'food-img') %></td>
 					<td>Quesadillas de flor de calabaza en salsa Roja</td>
 					<td>
-						<div style="display: -webkit-inline-box;">
+						<div style="display: -webkit-inline-box; margin: auto; width: 129px;">
 							<%= image_tag('minus.png', class: 'logo') %>
-							<input type="text" class="form-control" id="amount" style="width: 35px; padding-right: 2px; padding-left: 2px;">
+							<input type="text" class="form-control" value="1" id="amount" style="width: 35px; padding-right: 2px; padding-left: 2px; font-size: 23px; text-align: center;">
 							<%= image_tag('plus.png', class: 'logo') %>
 						</div>
 					</td>
