@@ -9,6 +9,13 @@ class ApisController < ApplicationController
     @json=get_client
   end
   
+  def get_tags_to_json
+    @json=get_tags
+  end
+  
+  def get_dishes_to_json
+    @json=get_dishes
+  end
   def get_dishes_by_tag_to_json
     @json=get_dishes_by_tag
   end
@@ -57,6 +64,32 @@ class ApisController < ApplicationController
     end
   end
   
+  def get_tags
+    @json=Jbuilder.new
+    tags=Tag.all
+    @json.set! :status do 
+      @json.set! :status, 0
+      @json.set! :Tags do
+        @json.array! tags do |t|
+         @json.set! :name, t.name 
+        end
+      end
+    end
+  end
+  
+  def get_dishes
+    @json=Jbuilder.new
+    dishes=Dish.all
+    @json.set! :status do
+      @json.set! :status, 0
+      @json.set! :Dishes do 
+        @json.array! dishes do |d|
+          @json.set! :name, d.name
+        end
+      end
+    end
+  end
+  
   def get_dishes_by_tag
     @json=Jbuilder.new
     if tag=Tag.find_by(id: params[:tag_id])
@@ -64,15 +97,18 @@ class ApisController < ApplicationController
       @json.set! :Tag do 
         @json.set! :name, tag.name
         @json.set! :Dishes do 
-          @json.array! Dish.all do |d|
-            if DishesTag.find_by(tag_id: tag.id, dish_id: d.id)
-              @json.set! :name, d.name
-            end
+          @json.array! tag.dishes do |td|
+            @json.set! :name, td.name
+            @json.set! :preparation_time, td.preparation_time
+            @json.set! :price, td.price
           end
         end
       end
     else
-      
+      @json.set! :error do
+        @json.set! :status, 1
+        @json.set! :error, "error"
+      end
     end
   end
   
