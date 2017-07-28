@@ -9,6 +9,10 @@ class ApisController < ApplicationController
     @json=get_client
   end
   
+  def get_dishes_by_tag_to_json
+    @json=get_dishes_by_tag
+  end
+  
   private 
   
   def get_client
@@ -55,12 +59,16 @@ class ApisController < ApplicationController
   
   def get_dishes_by_tag
     @json=Jbuilder.new
-    if tag=DishesTag.find_by(id: params[:tag_id])
+    if tag=Tag.find_by(id: params[:tag_id])
       @json.set! :status, 0
       @json.set! :Tag do 
         @json.set! :name, tag.name
         @json.set! :Dishes do 
-          @json.array! Ta
+          @json.array! Dish.all do |d|
+            if DishesTag.find_by(tag_id: tag.id, dish_id: d.id)
+              @json.set! :name, d.name
+            end
+          end
         end
       end
     else

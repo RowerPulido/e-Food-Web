@@ -4,4 +4,8 @@ Rails.application.routes.draw do
   get 'signup', to: 'welcome#new'
   get 'get/get_client', to: 'apis#get_clients_to_json'
   post 'post/add_clients', to: 'apis#create_clients_to_json'
+  
+  get 'get/get_dishes', to: 'apis#get_dishes_by_tag_to_json'
+  
+  resources :dishes, only: [:index, :create, :show, :update, :destroy]
 end
