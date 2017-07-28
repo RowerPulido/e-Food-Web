@@ -9,6 +9,13 @@ class ApisController < ApplicationController
     @json=get_client
   end
   
+  def get_tags_to_json
+    @json=get_tags
+  end
+  
+  def get_dishes_to_json
+    @json=get_dishes
+  end
   private 
   
   def get_client
@@ -49,6 +56,32 @@ class ApisController < ApplicationController
       @json.set! :error do
         @json.set! :status, 1
         @json.set! :message, "User not found"
+      end
+    end
+  end
+  
+  def get_tags
+    @json=Jbuilder.new
+    tags=Tag.all
+    @json.set! :status do 
+      @json.set! :status, 0
+      @json.set! :Tags do
+        @json.array! tags do |t|
+         @json.set! :name, t.name 
+        end
+      end
+    end
+  end
+  
+  def get_dishes
+    @json=Jbuilder.new
+    dishes=Dish.all
+    @json.set! :status do
+      @json.set! :status, 0
+      @json.set! :Dishes do 
+        @json.array! dishes do |d|
+          @json.set! :name, d.name
+        end
       end
     end
   end
@@ -103,6 +136,7 @@ class ApisController < ApplicationController
       end
     end
   end
+  
   def user_params
     params.permit(:email, :name, :last_name, :password)
   end
