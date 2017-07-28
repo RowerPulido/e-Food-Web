@@ -125,12 +125,15 @@ ActiveRecord::Schema.define(version: 20170728160614) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
 >>>>>>> 6ad289e9feb1633a568b0ce78f157ee1c4aa8875
+<<<<<<< HEAD
   end
 
   create_table "tags", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+=======
+>>>>>>> 8f29343e2d9860008be59252c62fff3bb4e01cad
   end
 
   create_table "users", force: :cascade do |t|
