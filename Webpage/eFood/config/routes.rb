@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   get 'signup', to: 'welcome#new'
   get 'chef_signup', to: 'welcome#newChef'
   get 'login', to: 'welcome#login'
+  
+  resources :dishes, only: [:index, :create, :show, :update, :destroy]
 end
