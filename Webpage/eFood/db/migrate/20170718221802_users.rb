@@ -4,6 +4,7 @@ class Users < ActiveRecord::Migration[5.0]
       t.string :email
       t.string :name
       t.string :last_name
+      t.string :cellphone
       t.timestamps
     end
   end
