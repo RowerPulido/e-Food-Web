@@ -97,15 +97,18 @@ class ApisController < ApplicationController
       @json.set! :Tag do 
         @json.set! :name, tag.name
         @json.set! :Dishes do 
-          @json.array! Dish.all do |d|
-            if DishesTag.find_by(tag_id: tag.id, dish_id: d.id)
-              @json.set! :name, d.name
-            end
+          @json.array! tag.dishes do |td|
+            @json.set! :name, td.name
+            @json.set! :preparation_time, td.preparation_time
+            @json.set! :price, td.price
           end
         end
       end
     else
-      
+      @json.set! :error do
+        @json.set! :status, 1
+        @json.set! :error, "error"
+      end
     end
   end
   
