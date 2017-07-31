@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'welcome#home'
   get 'signup', to: 'welcome#new'
   get 'get/get_client', to: 'apis#get_clients_to_json'
+  get 'get/get_all_brands', to: 'apis#get_all_brands_to_json'
   get 'get/get_tags', to: 'apis#get_tags_to_json'
   get 'get/get_dishes', to: 'apis#get_dishes_to_json'
   get 'get/get_kitchen_dishes', to: 'apis#get_kitchen_dishes_to_json'

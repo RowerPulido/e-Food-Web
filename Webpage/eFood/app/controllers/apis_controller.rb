@@ -34,8 +34,8 @@ class ApisController < ApplicationController
     @json=get_kitchen_dishes
   end
   
-  def get_brands_to_json
-    @json=get_brands
+  def get_all_brands_to_json
+    @json=get_all_brands
   end
   
   def get_dish_with_kitchen_dishes_to_json
@@ -51,7 +51,14 @@ class ApisController < ApplicationController
         @json.set! :name, dish.name
         @json.set! :preparation_time, dish.preparation_time
         @json.set! :price, dish.price
-        @json.set! :kitchen, dish.kitchen.name
+        @json.set! :Kitchen do
+          @json.set! :id, dish.kitchen.id
+          @json.set! :name, dish.kitchen.name
+          @json.set! :address, dish.kitchen.address
+          @json.set! :zone, dish.kitchen.zone
+          @json.set! :Kitchen_brand, dish.kitchen.brand
+          @json.set! :Kitchen_owner, dish.kitchen.seller.user
+        end
         @json.set! :Kitchen_dishes do
           @json.array! dish.kitchen.dishes do |kd|
             @json.set! :name, kd.name
@@ -68,8 +75,14 @@ class ApisController < ApplicationController
     end
   end
   
-  def get_brands
+  def get_all_brands
     @json=Jbuilder.new
+    brand=Brand.all
+    @json.set! :Brands do
+      @json.array! brand do |b|
+        @json.set! :name, brand.name
+      end
+    end
   end
   
   def get_client
