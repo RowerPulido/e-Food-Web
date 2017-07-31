@@ -1,8 +1,17 @@
 require 'json'
 class ApisController < ApplicationController
   skip_before_filter :verify_authenticity_token
+  
   def add_client_to_json
     @json=add_client
+  end
+  
+  def add_seller_to_json
+    @josn=add_seller
+  end
+  
+  def create_clients_to_json
+    @json=create_clients
   end
   
   def get_clients_to_json
@@ -150,12 +159,11 @@ class ApisController < ApplicationController
   def add_client
     @json=Jbuilder.new
     user=User.new(user_params)
-    if user.save
-      @json.category do
+    if user.save && Client.create(user_id: user.id)
+      @json.set! :user do
         @json.set! :status, 0
         @json.set! :message, "Foodie registrado"
       end
-      Client.create(user.id)
     elsif user.name.length<3 || user.last_name.length<3
       @json.errors do
         @json.set! :status, 1
@@ -179,7 +187,43 @@ class ApisController < ApplicationController
     end
   end
   
+    def add_seller
+    @json=Jbuilder.new
+    user=User.new(user_params)
+    if user.save && Seller.create(user_id: user.id, RFC: params[:RFC], CLABE: params[:CLABE])
+      @json.set! :user do
+        @json.set! :status, 0
+        @json.set! :message, "Foodie registrado"
+      end
+    elsif user.name.length<3 || user.last_name.length<3
+      @json.errors do
+        @json.set! :status, 1
+        @json.set! :reason, "Firts name or Last name cant be blank or are too short (minimum is 3 characters)"
+      end
+    elsif User.find_by(email: user.email)
+      @json.errors do
+        @json.set! :status, 2
+        @json.set! :reason, "Email alrready used"
+      end
+    elsif User.find_by(cellphone: user.cellphone)
+      @json.errors do
+        @json.set! :status, 3
+        @json.set! :reason, "Phone alrready used"
+      end
+    elsif user.cellphone.length>10 || user.cellphone.length<7
+      @json.errors do
+        @json.set! :status, 4
+        @json.set! :reason, "Phone number invalid"
+      end
+    end
+  end
+  
+  
+  
   def user_params
     params.permit(:email, :name, :last_name, :cellphone, :password)
+  end
+  def seller_params
+    params.permit(:email, :name, :last_name, :cellphone, :password, :RFC, :CLABE)
   end
 end
