@@ -1,8 +1,8 @@
 require 'json'
 class ApisController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  def create_clients_to_json
-    @json=create_users
+  def add_client_to_json
+    @json=add_client
   end
   
   def get_clients_to_json
@@ -16,11 +16,24 @@ class ApisController < ApplicationController
   def get_dishes_to_json
     @json=get_dishes
   end
+  
   def get_dishes_by_tag_to_json
     @json=get_dishes_by_tag
   end
   
+  def get_kitchen_dishes_to_json
+    @json=get_kitchen_dishes
+  end
+  
+  def get_brands_to_json
+    @json=get_brands
+  end
+  
   private 
+  
+  def get_brands
+    @json=Jbuilder.new
+  end
   
   def get_client
     @json=Jbuilder.new
@@ -64,6 +77,27 @@ class ApisController < ApplicationController
     end
   end
   
+  def get_kitchen_dishes
+    @json=Jbuilder.new
+    if kitchen=Kitchen.find_by(id: params[:kitchen_id])
+      @json.set! kitchen do
+        @json.set! :name, kitchen.name
+        @json.set! :Dishes do
+          @json.array! kitchen.dishes do |d|
+            @json.set! :name, d.name
+            @json.set! :preparation_time, d.preparation_time
+            @json.set! :price, d.price
+          end
+        end
+      end
+    else
+      @json.set! :error do
+        @json.set! :status, 1
+        @json.set! :error, "Kitchen not found"
+      end
+    end
+  end
+  
   def get_tags
     @json=Jbuilder.new
     tags=Tag.all
@@ -101,18 +135,19 @@ class ApisController < ApplicationController
             @json.set! :name, td.name
             @json.set! :preparation_time, td.preparation_time
             @json.set! :price, td.price
+            @json.set! :kitchen_name, td.kitchen.name
           end
         end
       end
     else
       @json.set! :error do
         @json.set! :status, 1
-        @json.set! :error, "error"
+        @json.set! :error, "Tag not found"
       end
     end
   end
   
-  def create_clients
+  def add_client
     @json=Jbuilder.new
     @user=User.new(user_params)
     if @user.save
