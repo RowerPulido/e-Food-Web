@@ -1,6 +1,15 @@
 require 'json'
 class ApisController < ApplicationController
   skip_before_filter :verify_authenticity_token
+  
+  def add_client_to_json
+    @json=add_client
+  end
+  
+  def add_seller_to_json
+    @josn=add_seller
+  end
+  
   def create_clients_to_json
     @json=create_clients
   end
@@ -16,11 +25,24 @@ class ApisController < ApplicationController
   def get_dishes_to_json
     @json=get_dishes
   end
+  
   def get_dishes_by_tag_to_json
     @json=get_dishes_by_tag
   end
   
+  def get_kitchen_dishes_to_json
+    @json=get_kitchen_dishes
+  end
+  
+  def get_brands_to_json
+    @json=get_brands
+  end
+  
   private 
+  
+  def get_brands
+    @json=Jbuilder.new
+  end
   
   def get_client
     @json=Jbuilder.new
@@ -64,6 +86,27 @@ class ApisController < ApplicationController
     end
   end
   
+  def get_kitchen_dishes
+    @json=Jbuilder.new
+    if kitchen=Kitchen.find_by(id: params[:kitchen_id])
+      @json.set! kitchen do
+        @json.set! :name, kitchen.name
+        @json.set! :Dishes do
+          @json.array! kitchen.dishes do |d|
+            @json.set! :name, d.name
+            @json.set! :preparation_time, d.preparation_time
+            @json.set! :price, d.price
+          end
+        end
+      end
+    else
+      @json.set! :error do
+        @json.set! :status, 1
+        @json.set! :error, "Kitchen not found"
+      end
+    end
+  end
+  
   def get_tags
     @json=Jbuilder.new
     tags=Tag.all
@@ -101,18 +144,19 @@ class ApisController < ApplicationController
             @json.set! :name, td.name
             @json.set! :preparation_time, td.preparation_time
             @json.set! :price, td.price
+            @json.set! :kitchen_name, td.kitchen.name
           end
         end
       end
     else
       @json.set! :error do
         @json.set! :status, 1
-        @json.set! :error, "error"
+        @json.set! :error, "Tag not found"
       end
     end
   end
   
-  def create_clients
+  def add_client
     @json=Jbuilder.new
     user=User.new(user_params)
     errors = false
@@ -165,7 +209,43 @@ class ApisController < ApplicationController
     end
   end
   
+    def add_seller
+    @json=Jbuilder.new
+    user=User.new(user_params)
+    if user.save && Seller.create(user_id: user.id, RFC: params[:RFC], CLABE: params[:CLABE])
+      @json.set! :user do
+        @json.set! :status, 0
+        @json.set! :message, "Foodie registrado"
+      end
+    elsif user.name.length<3 || user.last_name.length<3
+      @json.errors do
+        @json.set! :status, 1
+        @json.set! :reason, "Firts name or Last name cant be blank or are too short (minimum is 3 characters)"
+      end
+    elsif User.find_by(email: user.email)
+      @json.errors do
+        @json.set! :status, 2
+        @json.set! :reason, "Email alrready used"
+      end
+    elsif User.find_by(cellphone: user.cellphone)
+      @json.errors do
+        @json.set! :status, 3
+        @json.set! :reason, "Phone alrready used"
+      end
+    elsif user.cellphone.length>10 || user.cellphone.length<7
+      @json.errors do
+        @json.set! :status, 4
+        @json.set! :reason, "Phone number invalid"
+      end
+    end
+  end
+  
+  
+  
   def user_params
     params.permit(:email, :name, :last_name, :cellphone, :password)
+  end
+  def seller_params
+    params.permit(:email, :name, :last_name, :cellphone, :password, :RFC, :CLABE)
   end
 end

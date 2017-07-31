@@ -1,4 +1,4 @@
 class Brand < ActiveRecord::Base
-   has_many :branch_offices
+   has_many :kitchens
    belongs_to :seller
 end
