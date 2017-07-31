@@ -2,7 +2,7 @@ require 'json'
 class ApisController < ApplicationController
   skip_before_filter :verify_authenticity_token
   def create_clients_to_json
-    @json=create_users
+    @json=create_clients
   end
   
   def get_clients_to_json
@@ -115,12 +115,11 @@ class ApisController < ApplicationController
   def create_clients
     @json=Jbuilder.new
     user=User.new(user_params)
-    if user.save
-      @json.category do
+    if user.save && Client.create(user_id: user.id)
+      @json.set! :user do
         @json.set! :status, 0
         @json.set! :message, "Foodie registrado"
       end
-      Client.create(user.id)
     elsif user.name.length<3 || user.last_name.length<3
       @json.errors do
         @json.set! :status, 1
