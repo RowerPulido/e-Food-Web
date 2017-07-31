@@ -7,7 +7,7 @@ class ApisController < ApplicationController
   end
   
   def add_seller_to_json
-    @josn=add_seller
+    @json=add_seller
   end
   
   def create_clients_to_json
@@ -38,7 +38,35 @@ class ApisController < ApplicationController
     @json=get_brands
   end
   
-  private 
+  def get_dish_with_kitchen_dishes_to_json
+    @json=get_dish_with_kitchen
+  end
+  
+  private
+  
+  def get_dish_with_kitchen
+    @json=Jbuilder.new
+    if dish=Dish.find_by(id: params[:dish_id])
+      @json.set! dish do
+        @json.set! :name, dish.name
+        @json.set! :preparation_time, dish.preparation_time
+        @json.set! :price, dish.price
+        @json.set! :kitchen, dish.kitchen.name
+        @json.set! :Kitchen_dishes do
+          @json.array! dish.kitchen.dishes do |kd|
+            @json.set! :name, kd.name
+            @json.set! :preparation_time, kd.preparation_time
+            @json.set! :price, kd.price
+          end
+        end
+      end
+    else
+      @json.set! :error do
+        @json.set! :status, 1
+        @json.set! :message, "dish not found"
+      end
+    end
+  end
   
   def get_brands
     @json=Jbuilder.new
@@ -85,6 +113,8 @@ class ApisController < ApplicationController
       end
     end
   end
+  
+  
   
   def get_kitchen_dishes
     @json=Jbuilder.new
