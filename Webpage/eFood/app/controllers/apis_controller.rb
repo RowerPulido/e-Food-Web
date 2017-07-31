@@ -200,9 +200,9 @@ class ApisController < ApplicationController
     end
     if user.name.length<3 || user.last_name.length<3
       @json.set! :errors do
-        @json.set! :messages, "Error"
         errors = true
         error_name.push(["Firts name or Last name cant be blank or are too short (minimum is 3 characters)",1])
+        @json.set! :messages, "Error"
       end
     end
     if User.find_by(email: user.email)
@@ -239,33 +239,54 @@ class ApisController < ApplicationController
     end
   end
   
-    def add_seller
+  def add_seller
     @json=Jbuilder.new
     user=User.new(user_params)
+    errors = false
+    error_name = []
     if user.save && Seller.create(user_id: user.id, RFC: params[:RFC], CLABE: params[:CLABE])
       @json.set! :user do
         @json.set! :status, 0
-        @json.set! :message, "Foodie registrado"
+        errors = false
+        @json.set! :message, "Chef registrado"
       end
-    elsif user.name.length<3 || user.last_name.length<3
+    end
+    if user.name.length<3 || user.last_name.length<3
       @json.errors do
-        @json.set! :status, 1
-        @json.set! :reason, "Firts name or Last name cant be blank or are too short (minimum is 3 characters)"
+        errors = true
+        error_name.push(["Firts name or Last name cant be blank or are too short (minimum is 3 characters)",1])
       end
-    elsif User.find_by(email: user.email)
+    end
+    if User.find_by(email: user.email)
       @json.errors do
-        @json.set! :status, 2
-        @json.set! :reason, "Email alrready used"
+        errors = true
+        error_name.push(["Email alrready used",2])
+        @json.set! :messages, "Error"
       end
-    elsif User.find_by(cellphone: user.cellphone)
+    end
+    if User.find_by(cellphone: user.cellphone)
       @json.errors do
-        @json.set! :status, 3
-        @json.set! :reason, "Phone alrready used"
+        errors = true
+        error_name.push(["Phone alrready used",3])
+        @json.set! :messages, "Error"
       end
-    elsif user.cellphone.length>10 || user.cellphone.length<7
+    end
+    if user.cellphone.length>10 || user.cellphone.length<7
       @json.errors do
-        @json.set! :status, 4
-        @json.set! :reason, "Phone number invalid"
+        errors = true
+        error_name.push(["Phone number invalid",4])
+        @json.set! :messages, "Error"
+      end
+    end
+    
+    if errors
+      @json.set! :errors do
+        @json.messages do
+          @json.array! (error_name) do |e, s|
+            @json.set! :status, s
+            @json.set! :description , e
+          end
+        end
       end
     end
   end
