@@ -254,7 +254,7 @@ class ApisController < ApplicationController
     if user.name.length<3 || user.last_name.length<3
       @json.errors do
         errors = true
-        error_name.push(["Firts name or Last name cant be blank or are too short (minimum is 3 characters)",1])
+        error_name.push(["First name or Last name cant be blank or are too short (minimum is 3 characters)",1])
       end
     end
     if User.find_by(email: user.email)
