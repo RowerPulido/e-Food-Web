@@ -189,30 +189,52 @@ class ApisController < ApplicationController
   def add_client
     @json=Jbuilder.new
     user=User.new(user_params)
+    errors = false
+    error_name = []
     if user.save && Client.create(user_id: user.id)
       @json.set! :user do
         @json.set! :status, 0
-        @json.set! :message, "Foodie registrado"
+        errors = false
+        @json.set! :messages, "Foodie registrado"
       end
-    elsif user.name.length<3 || user.last_name.length<3
-      @json.errors do
-        @json.set! :status, 1
-        @json.set! :reason, "Firts name or Last name cant be blank or are too short (minimum is 3 characters)"
+    end
+    if user.name.length<3 || user.last_name.length<3
+      @json.set! :errors do
+        @json.set! :messages, "Error"
+        errors = true
+        error_name.push(["Firts name or Last name cant be blank or are too short (minimum is 3 characters)",1])
       end
-    elsif User.find_by(email: user.email)
-      @json.errors do
-        @json.set! :status, 2
-        @json.set! :reason, "Email alrready used"
+    end
+    if User.find_by(email: user.email)
+      @json.set! :errors do
+        errors = true
+        error_name.push(["Email alrready used",2])
+        @json.set! :messages, "Error"
       end
-    elsif User.find_by(cellphone: user.cellphone)
-      @json.errors do
-        @json.set! :status, 3
-        @json.set! :reason, "Phone alrready used"
+    end
+    if User.find_by(cellphone: user.cellphone)
+      @json.set! :errors do
+        errors = true
+        error_name.push(["Phone alrready used",3])
+        @json.set! :messages, "Error"
       end
-    elsif user.cellphone.length>10 || user.cellphone.length<7
-      @json.errors do
-        @json.set! :status, 4
-        @json.set! :reason, "Phone number invalid"
+    end
+    if user.cellphone.length>10 || user.cellphone.length<7
+      @json.set! :errors do
+        errors = true
+        error_name.push(["Phone number invalid",4])
+        @json.set! :messages, "Error"
+      end
+    end
+    
+    if errors
+      @json.set! :errors do
+        @json.messages do
+          @json.array! (error_name) do |e, s|
+            @json.set! :status, s
+            @json.set! :description , e
+          end
+        end
       end
     end
   end
