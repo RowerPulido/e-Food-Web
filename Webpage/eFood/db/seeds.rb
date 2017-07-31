@@ -18,9 +18,9 @@ dish_list = [
 ]
 
 tag_list = [
-  [ 'Italiana' ],
-  [ 'Mexicana' ],
-  [ 'Picante' ]
+  [ "Italiana" ],
+  [ "Mexicana" ],
+  [ "Picante" ]
 ]
 
 dish_tag_list = [

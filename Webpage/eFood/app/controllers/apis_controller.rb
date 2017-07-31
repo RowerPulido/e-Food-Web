@@ -149,41 +149,37 @@ class ApisController < ApplicationController
   
   def add_client
     @json=Jbuilder.new
-    @user=User.new(user_params)
-    if @user.save
+    user=User.new(user_params)
+    if user.save
       @json.category do
         @json.set! :status, 0
-        @json.set! :message, "User created"
+        @json.set! :message, "Foodie registrado"
       end
-    elsif @user.username.length<3
+      Client.create(user.id)
+    elsif user.name.length<3 || user.last_name.length<3
       @json.errors do
         @json.set! :status, 1
-        @json.set! :reason, "Name cant be blank or Is too short (minimum is 3 characters)"
+        @json.set! :reason, "Firts name or Last name cant be blank or are too short (minimum is 3 characters)"
       end
-    elsif User.find_by(username: @user.username)
-       @json.errors do
-        @json.set! :status, 2
-        @json.set! :reason, "Name alrready entered"
-      end
-    elsif User.find_by(email: @user.email)
+    elsif User.find_by(email: user.email)
       @json.errors do
-        @json.set! :status, 3
+        @json.set! :status, 2
         @json.set! :reason, "Email alrready used"
       end
-    elsif User.find_by(tel: @user.cellphone)
+    elsif User.find_by(cellphone: user.cellphone)
       @json.errors do
-        @json.set! :status, 4
+        @json.set! :status, 3
         @json.set! :reason, "Phone alrready used"
       end
-    elsif @user.tel.length>10 || @user.tel.length<7
+    elsif user.cellphone.length>10 || user.cellphone.length<7
       @json.errors do
-        @json.set! :status, 5
+        @json.set! :status, 4
         @json.set! :reason, "Phone number invalid"
       end
     end
   end
   
   def user_params
-    params.permit(:email, :name, :last_name, :password)
+    params.permit(:email, :name, :last_name, :cellphone, :password)
   end
 end
