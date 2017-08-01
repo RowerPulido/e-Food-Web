@@ -14,6 +14,17 @@ class ApisController < ApplicationController
     @json=add_seller
   end
   
+<<<<<<< HEAD
+  def update_seller_to_json
+    @json=update_seller
+  end
+  
+  def create_clients_to_json
+    @json=create_clients
+  end
+  
+=======
+>>>>>>> d45cd679fc8e71e00c74ebfee1a7baaa894466ae
   def get_clients_to_json
     @json=get_client
   end
@@ -487,7 +498,68 @@ class ApisController < ApplicationController
     end
   end
   
-  
+  def update_seller
+    @json=Jbuilder.new
+    ouser=User.find_by(id: params[:id])
+    user=User.new(user_params)
+    errors = false
+    error_name = []
+    if ouser.nil?
+        @json.category do
+          @json.set! :status, 1
+          @json.set! :reason, 'user not foud'
+        end
+    else
+      
+      if user.name.length<3 || user.last_name.length<3
+        @json.set! :errors do
+          errors = true
+          error_name.push(["Firts name or Last name cant be blank or are too short (minimum is 3 characters)",1])
+          @json.set! :messages, "Error"
+        end
+      end
+      if User.find_by(email: user.email)
+        @json.set! :errors do
+          errors = true
+          error_name.push(["Email alrready used",2])
+          @json.set! :messages, "Error"
+        end
+      end
+      if User.find_by(cellphone: user.cellphone)
+        @json.set! :errors do
+          errors = true
+          error_name.push(["Phone alrready used",3])
+          @json.set! :messages, "Error"
+        end
+      end
+      if user.cellphone.length>10 || user.cellphone.length<7
+        @json.set! :errors do
+          errors = true
+          error_name.push(["Phone number invalid",4])
+          @json.set! :messages, "Error"
+        end
+      end
+      
+      if errors
+        @json.set! :errors do
+          @json.messages do
+            @json.array! (error_name) do |e, s|
+              @json.set! :status, s
+              @json.set! :description , e
+            end
+          end
+        end
+      else
+        User.update(ouser.id, name: params[:name], email: params[:email], last_name: params[:last_name], cellphone: params[:cellphone], password: params[:password])
+        s = Seller.find_by(user_id: ouser.id)
+        Seller.update(s.id, CLABE: params[:CLABE])
+        @json.category do
+        @json.set! :status, 0
+        @json.set! :reason, 'Nice ' + user.name.to_s
+        end
+      end
+    end
+  end
   
   def user_params
     params.permit(:email, :name, :last_name, :cellphone, :password)
