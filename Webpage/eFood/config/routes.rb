@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   post 'post/add_client', to: 'apis#add_client_to_json'
   post 'post/update_client', to: 'apis#update_client_to_json'
   post 'post/add_seller', to: 'apis#add_seller_to_json'
+  post 'post/update_seller', to: 'apis#update_seller_to_json'
   
   resources :dishes, only: [:index, :create, :show, :update, :destroy]
 end
