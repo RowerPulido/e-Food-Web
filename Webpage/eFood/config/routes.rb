@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'get/get_dishes_by_tag', to: 'apis#get_dishes_by_tag_to_json'
   get 'get/get_dish_with_kitchen_dishes', to: 'apis#get_dish_with_kitchen_dishes_to_json'
   post 'post/add_client', to: 'apis#add_client_to_json'
+  post 'post/update_client', to: 'apis#update_client_to_json'
   post 'post/add_seller', to: 'apis#add_seller_to_json'
   
   resources :dishes, only: [:index, :create, :show, :update, :destroy]

@@ -6,6 +6,10 @@ class ApisController < ApplicationController
     @json=add_client
   end
   
+  def update_client_to_json
+    @json=update_client
+  end
+  
   def add_seller_to_json
     @json=add_seller
   end
@@ -78,9 +82,60 @@ class ApisController < ApplicationController
   def get_all_brands
     @json=Jbuilder.new
     brand=Brand.all
-    @json.set! :Brands do
+    @json.set! :brands do
       @json.array! brand do |b|
-        @json.set! :name, brand.name
+        @json.set! :status, 0
+        @json.set! :id, b.id
+        @json.set! :name, b.name
+      end
+    end
+  end
+  
+  def get_brand
+    @json=Jbuilder.new
+    brand=Brand.find_by(id: params[:brand_id])
+    @json.set! :brand do
+      @json.set! :status, 0
+      @json.set! :id, brand.id
+      @json.set! :name, brand.name
+    end
+  end
+  
+  def add_brand
+    @json=Jbuilder.new
+    brand=Brand.new(brand_params)
+    errors = false
+    error_name = []
+    if brand.save
+      @json.set! :brand do
+        @json.set! :status, 0
+        errors = false
+        @json.set! :messages, "Marca Registrada"
+      end
+    end
+    if brand.name.length<5 || user.last_name.length>40
+      @json.set! :errors do
+        errors = true
+        error_name.push(["Name format incorrect",1])
+        @json.set! :messages, "Error"
+      end
+    end
+    if Brand.find_by(name: brand.name)
+      @json.set! :errors do
+        errors = true
+        error_name.push(["Name already in use",2])
+        @json.set! :messages, "Error"
+      end
+    end
+    
+    if errors
+      @json.set! :errors do
+        @json.messages do
+          @json.array! (error_name) do |e, s|
+            @json.set! :status, s
+            @json.set! :description , e
+          end
+        end
       end
     end
   end
@@ -252,18 +307,74 @@ class ApisController < ApplicationController
     end
   end
   
+  def update_client
+    @json=Jbuilder.new
+    user=User.new(user_params)
+    ouser=User.find_by(id: params[:id])
+    errors = false
+    error_name = []
+    if ouser.nil?
+        @json.category do
+          @json.set! :status, 1
+          @json.set! :reason, 'user not foud'
+        end
+    else
+      
+      if user.name.length<3 || user.last_name.length<3
+        @json.set! :errors do
+          errors = true
+          error_name.push(["Firts name or Last name cant be blank or are too short (minimum is 3 characters)",1])
+          @json.set! :messages, "Error"
+        end
+      end
+      if User.find_by(email: user.email)
+        @json.set! :errors do
+          errors = true
+          error_name.push(["Email alrready used",2])
+          @json.set! :messages, "Error"
+        end
+      end
+      if User.find_by(cellphone: user.cellphone)
+        @json.set! :errors do
+          errors = true
+          error_name.push(["Phone alrready used",3])
+          @json.set! :messages, "Error"
+        end
+      end
+      if user.cellphone.length>10 || user.cellphone.length<7
+        @json.set! :errors do
+          errors = true
+          error_name.push(["Phone number invalid",4])
+          @json.set! :messages, "Error"
+        end
+      end
+      
+      if errors
+        @json.set! :errors do
+          @json.messages do
+            @json.array! (error_name) do |e, s|
+              @json.set! :status, s
+              @json.set! :description , e
+            end
+          end
+        end
+      else
+        User.update(ouser.id, name: params[:name], email: params[:email], last_name: params[:last_name], cellphone: params[:cellphone], password: params[:password])
+        
+        @json.category do
+        @json.set! :status, 0
+        @json.set! :reason, 'Nice ' + user.name.to_s
+        end
+      end
+    end
+  end
+  
   def add_seller
     @json=Jbuilder.new
     user=User.new(user_params)
     errors = false
     error_name = []
-    if user.save && Seller.create(user_id: user.id, RFC: params[:RFC], CLABE: params[:CLABE])
-      @json.set! :user do
-        @json.set! :status, 0
-        errors = false
-        @json.set! :message, "Chef registrado"
-      end
-    end
+    
     if user.name.length<3 || user.last_name.length<3
       @json.errors do
         errors = true
@@ -301,6 +412,14 @@ class ApisController < ApplicationController
           end
         end
       end
+    else
+      if user.save && Seller.create(user_id: user.id, RFC: params[:RFC], CLABE: params[:CLABE])
+        @json.set! :user do
+          @json.set! :status, 0
+          errors = false
+          @json.set! :message, "Chef registrado"
+        end
+      end
     end
   end
   
@@ -311,5 +430,8 @@ class ApisController < ApplicationController
   end
   def seller_params
     params.permit(:email, :name, :last_name, :cellphone, :password, :RFC, :CLABE)
+  end
+  def brand_params
+    params.permit(:name)
   end
 end
