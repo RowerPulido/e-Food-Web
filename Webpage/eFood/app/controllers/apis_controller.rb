@@ -10,10 +10,6 @@ class ApisController < ApplicationController
     @json=add_seller
   end
   
-  def create_clients_to_json
-    @json=create_clients
-  end
-  
   def get_clients_to_json
     @json=get_client
   end
@@ -33,6 +29,9 @@ class ApisController < ApplicationController
   def get_kitchen_dishes_to_json
     @json=get_kitchen_dishes
   end
+  def get_kitchens_by_brand_to_json
+    @json=get_kitchens_by_brand
+  end
   
   def get_all_brands_to_json
     @json=get_all_brands
@@ -46,24 +45,45 @@ class ApisController < ApplicationController
   
   def get_dish_with_kitchen
     @json=Jbuilder.new
-    if dish=Dish.find_by(id: params[:dish_id])
+    if dish=Dish.find_by(id: params[:dish_id]) || dish=Dish.find_by(name: params[:dish_name]) 
       @json.set! dish do
+        @json.set! :status, 0
+        @json.set! :id, dish.id
         @json.set! :name, dish.name
         @json.set! :preparation_time, dish.preparation_time
         @json.set! :price, dish.price
+        @json.set! :Tags do
+          @json.array! dish.tags do |dt|
+            @json.set! :name, dt.name
+          end
+        end
         @json.set! :Kitchen do
           @json.set! :id, dish.kitchen.id
           @json.set! :name, dish.kitchen.name
           @json.set! :address, dish.kitchen.address
           @json.set! :zone, dish.kitchen.zone
-          @json.set! :Kitchen_brand, dish.kitchen.brand
-          @json.set! :Kitchen_owner, dish.kitchen.seller.user
-        end
-        @json.set! :Kitchen_dishes do
-          @json.array! dish.kitchen.dishes do |kd|
-            @json.set! :name, kd.name
-            @json.set! :preparation_time, kd.preparation_time
-            @json.set! :price, kd.price
+          @json.set! :Brand do
+            @json.set! :id, dish.kitchen.brand.id
+            @json.set! :name, dish.kitchen.brand.name
+          end
+          @json.set! :Owner do
+            @json.set! :id, dish.kitchen.seller.user.id
+            @json.set! :name, dish.kitchen.seller.user.name
+            @json.set! :last_name, dish.kitchen.seller.user.last_name
+            @json.set! :cellphone, dish.kitchen.seller.user.cellphone
+            @json.set! :email, dish.kitchen.seller.user.email
+          end
+          @json.set! :Dishes do
+            @json.array! dish.kitchen.dishes do |kd|
+              @json.set! :name, kd.name
+              @json.set! :preparation_time, kd.preparation_time
+              @json.set! :price, kd.price
+              @json.set! :Tags do
+                @json.array! kd.tags do |t|
+                  @json.set! :name, t.name
+                end
+              end
+            end
           end
         end
       end
@@ -81,6 +101,27 @@ class ApisController < ApplicationController
     @json.set! :Brands do
       @json.array! brand do |b|
         @json.set! :name, brand.name
+      end
+    end
+  end
+  
+  def get_kitchens_by_brand
+    @json=Jbuilder.new
+    if brand=Brand.find_by(id: params[:brand_id]) || brand=Brand.find_by(name: params[:brand_name])
+      @json.set! brand do
+        @json.set! :id, brand.id
+        @json.set! :name, brand.name
+        @json.set! :Kitchens do
+          @json.array! brand.kitchens do |k|
+            @json.set! :id, k.id
+            @json.set! :name, k.name
+          end
+        end
+      end
+    else
+      @json.set! :error do
+        @json.set! :status, 1
+        @json.set! :message, "brand not found"
       end
     end
   end
@@ -127,12 +168,35 @@ class ApisController < ApplicationController
     end
   end
   
-  
+  def get_seller_info 
+    @json=Jbuilder.new
+    if seller=Seller.find_by(id: params[:seller_id]) || seller=Seller.find_by(name: params[:seller_name])
+      @json.set! seller do
+        @json.set! :id, seller_id
+        @json.set! seller.user do |u|
+          @json.set! :name, u.name
+          @json.set! :last_name, u.last_name
+          @json.set! :email, u.email
+          @json.set! :Kitchen do
+            @json.array! seller.kitchen do |k|
+              @json.set! :id, k.id
+              @json.set! :name, k.name
+            end
+          end
+          @json.set! :Brand do
+            #if 
+          end
+        end
+      end
+    else
+      
+    end
+  end
   
   def get_kitchen_dishes
     @json=Jbuilder.new
-    if kitchen=Kitchen.find_by(id: params[:kitchen_id])
-      @json.set! kitchen do
+    if kitchen=Kitchen.find_by(id: params[:kitchen_id]) || kitchen=Kitchen.find_by(name: params[:kitchen_name])
+      @json.set! :kitchen do
         @json.set! :name, kitchen.name
         @json.set! :Dishes do
           @json.array! kitchen.dishes do |d|
@@ -308,8 +372,5 @@ class ApisController < ApplicationController
   
   def user_params
     params.permit(:email, :name, :last_name, :cellphone, :password)
-  end
-  def seller_params
-    params.permit(:email, :name, :last_name, :cellphone, :password, :RFC, :CLABE)
   end
 end
