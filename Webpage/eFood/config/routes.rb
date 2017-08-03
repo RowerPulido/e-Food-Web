@@ -10,8 +10,11 @@ Rails.application.routes.draw do
   get 'get/getKitchenDishes', to: 'apis#get_kitchen_dishes_to_json'
   get 'get/getDishesByTag', to: 'apis#get_dishes_by_tag_to_json'
   get 'get/getDishWithKitchenDishes', to: 'apis#get_dish_with_kitchen_dishes_to_json'
+  get 'get/getCommentsByDish', to: 'apis#get_comments_by_dish_to_json'
   post 'post/addClient', to: 'apis#add_client_to_json'
   post 'post/addSeller', to: 'apis#add_seller_to_json'
+  post 'post/addComment', to: 'apis#add_comment_to_json'
+  post 'post/updateComment', to: 'apis#update_comment_to_json'
   
   resources :dishes, only: [:index, :create, :show, :update, :destroy]
 end

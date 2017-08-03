@@ -1,4 +1,5 @@
 class Evaluation <  ActiveRecord::Base
-  belongs_to :client, dependent: :destroy
-  belongs_to :dishes, dependent: :destroy
+  belongs_to :client
+  belongs_to :dish
+  validates :calification, presence: true, length: { minimum: 0.5, maximum: 5 } 
 end

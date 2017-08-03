@@ -14,7 +14,6 @@ class ApisController < ApplicationController
     @json=add_seller
   end
   
-<<<<<<< HEAD
   def update_seller_to_json
     @json=update_seller
   end
@@ -23,8 +22,6 @@ class ApisController < ApplicationController
     @json=create_clients
   end
   
-=======
->>>>>>> d45cd679fc8e71e00c74ebfee1a7baaa894466ae
   def get_clients_to_json
     @json=get_client
   end
@@ -54,6 +51,18 @@ class ApisController < ApplicationController
   
   def get_dish_with_kitchen_dishes_to_json
     @json=get_dish_with_kitchen
+  end
+  
+  def get_comments_by_dish_to_json
+    @json=get_comments_by_dish
+  end
+
+  def add_comment_to_json
+    @json=add_comment
+  end
+  
+  def update_comment_to_json
+    @json=update_comment
   end
   
   private
@@ -101,6 +110,72 @@ class ApisController < ApplicationController
             end
           end
         end
+      end
+    else
+      @json.set! :error do
+        @json.set! :status, 1
+        @json.set! :message, "dish not found"
+      end
+    end
+  end
+  
+  def update_comment
+    @json=Jbuilder.new
+    if dish=Dish.find_by(id: params[:dish_id]) || dish=Dish.find_by(name: params[:dish_name]) 
+      if c=dish.comments.find_by(client_id: params[:client_id])  
+        if c.update(comment: params[:comment_update])
+          @json.set! comments do
+            @json.set! :status, 0
+            @json.set! :message, "comemnt updated"
+          end
+        else
+          @json.set! :errors do
+            @json.set! :status, 1
+            @json.set! :message, "unknown error"
+          end
+        end
+      else
+        @json.set! :errors do
+          @json.set! :status, 1
+          @json.set! :message, "Comment not found"
+        end
+      end
+    else
+      @json.set! :errors do
+        @json.set! :status, 1
+        @json.set! :message, "dish not found"
+      end
+    end
+  end
+  
+  def get_comments_by_dish
+    @json=Jbuilder.new
+    if 
+      @json.set! dish do
+        @json.set! :status, 0
+        @json.set! :name, dish.name
+        @json.set! :Comments do
+          @json.array! dish.comments do |d|
+            @json.set! :username, d.client.user.name
+            @json.set! :comment, d.comment
+          end
+        end
+      end
+    else
+      @json.set! :error do
+        @json.set! :status, 1
+        @json.set! :message, "dish not found"
+      end
+    end
+  end
+  
+  def add_comment
+    @json=Jbuilder.new
+    comment=Comment.create(client_id: params[:client_id], dish_id: params[:dish_id], comment: params[:comment])
+    if comment.save
+      @json.set! :comment do
+        @json.set! :status, 0
+        @json.set! :messege, 'Comment added'
       end
     else
       @json.set! :error do
@@ -236,7 +311,7 @@ class ApisController < ApplicationController
   
   def get_seller_info 
     @json=Jbuilder.new
-    if seller=Seller.find_by(id: params[:seller_id]) || seller=Seller.find_by(name: params[:seller_name])
+    if seller=Seller.find_by(id: params[:seller_id])
       @json.set! seller do
         @json.set! :id, seller_id
         @json.set! seller.user do |u|
