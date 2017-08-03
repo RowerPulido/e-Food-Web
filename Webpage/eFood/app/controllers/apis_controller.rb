@@ -561,6 +561,10 @@ class ApisController < ApplicationController
   def user_params
     params.permit(:email, :name, :last_name, :cellphone, :password)
   end
+<<<<<<< HEAD
+=======
+
+>>>>>>> 155f2c24357e7ee511be29723e3debb1aaabf7e1
   def seller_params
     params.permit(:email, :name, :last_name, :cellphone, :password, :RFC, :CLABE)
   end
