@@ -4,8 +4,10 @@
 
 @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 
+/* *** Barra de Navegacion *** */
+
 /* Necesario para poner la lupa en la busqueda */
-.fas input { text-indent: 18px;}
+.fas input { text-indent: 18px; }
 
 .fas { 
   position: relative;
@@ -22,6 +24,9 @@
 
 /* Elimina padding de la barra de busqueda */
 .navbar{
+	position: fixed;
+	margin-left: 5%;
+	margin-right: 5%;
 	padding-top:0px !important;
 	padding-bottom: 0px !important;
 }
@@ -37,18 +42,15 @@
 	background-color: #f47a14;
 	border-color: #f47a14;
 	color: white;
-	margin-right: 50px;
-	margin-left: 50px;
 }
 
 /* Imagen logo en Barra de Navegacion */
 .logo{
-	margin-left: 50px;
-	height: 60px;
+	height: 46px;
 }
 
 /* Cambiar color del placeholder en la busqueda */
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */ /* !important needed to overrride other properties*/
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */ /* !important needed to override other properties*/
     color:   #aaa !important;
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
@@ -65,8 +67,125 @@
 ::-ms-input-placeholder { /* Microsoft Edge */
    color:    #aaa !important;
 }
+/* *** FIN BARRA NAVEGACION *** */
 
 
+/* *** LOGIN PAGE *** */
+
+/* Background Login Page */
+.loginbg{
+	background-image: url(login-bg.png);
+	background-size: cover;
+	-webkit-background-origin:border;
+}
+
+/* Clase para forma del inicio de sesion */ 
+.form-login{
+	margin-left: 33%;
+	margin-right: 33%;
+	padding-bottom: 125px;
+}
+
+/* Fondo del Form */
+.login{
+	background: rgb(0, 0, 0);
+	background: rgba(0, 0, 0, 0.6);
+	padding-left: 7%; 
+	padding-right: 7%;
+}
+
+.login-fields{
+	width: 100%;
+	color: white;
+}
+
+/* Responsiveness for most elements */
+@media only screen and (max-width: 641px) {
+    [class*='responsive-font-title'] {
+        margin-left: 7%!important;
+        margin-right: 7%!important;
+        font-weight: 500;
+    }
+}
+
+/* Responsiveness for title login */
+@media only screen and (max-width: 641px) {
+    [class*='responsive'] {
+        margin-left: 10%!important;
+        margin-right: 10%!important;
+    }
+}
+
+/* Needed to make "Olvidar contraseña" display correctly at < 400px" */
+@media only screen and (max-width: 400px) {
+    [class*='responsive-small'] {
+        float: left!important;
+    }
+}
+
+/* Responsiveness for autoadjust of text based on screen size */
+@media only screen and (max-width: 641px) {
+    [class*='responsive-font'] {
+        font-size: 7.7vw!important;
+    }
+}
+/* *** FIN LOGIN PAGE *** */
+
+/* *** Clases Comunes para elementos *** */
+
+/* Agregarle espaciado a tus elementos */
+.spacing{
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+/* Espaciado a tus elementos */
+.margin{
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+/* Para textos color naranja y negritas */
+.colored-text {
+	font-weight:bold;
+	color:#f47a14;
+}
+
+a.links {
+    color:#000000 !important;
+    text-decoration:none;
+}
+
+.centered{
+	text-align: center;
+}
+
+.main{
+	margin-right: 5%;
+	margin-left: 5%;
+}
+/* *** Fin clases comunes *** */
+
+
+/* *** Carrito de Compra *** */
+.food-img{
+	width: 150px;
+}
+
+@media screen and (max-width: 641px) {
+table {border-color: #f47a14!important; border: 2px solid;}
+thead {display: none;}
+tr:nth-of-type(2n) {background-color: inherit;}
+tr td:first-child {font-weight:bold;font-size:1.3em;}
+tbody td {display: block;  text-align:center;}
+tbody td:before { 
+    content: attr(data-th); 
+    display: block;
+    text-align:center;  
+  }
+}
+
+/* *** Fin Carrito de Compra *** */
 
 /*--------------------------------------------------------------------
                  |    PARA EL CARRUSEL   |
