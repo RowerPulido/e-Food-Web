@@ -14,7 +14,6 @@ class ApisController < ApplicationController
     @json=add_seller
   end
   
-<<<<<<< HEAD
   def update_seller_to_json
     @json=update_seller
   end
@@ -23,8 +22,6 @@ class ApisController < ApplicationController
     @json=create_clients
   end
   
-=======
->>>>>>> d45cd679fc8e71e00c74ebfee1a7baaa894466ae
   def get_clients_to_json
     @json=get_client
   end
@@ -564,13 +561,10 @@ class ApisController < ApplicationController
   def user_params
     params.permit(:email, :name, :last_name, :cellphone, :password)
   end
-<<<<<<< HEAD
-=======
   def seller_params
     params.permit(:email, :name, :last_name, :cellphone, :password, :RFC, :CLABE)
   end
   def brand_params
     params.permit(:name)
   end
->>>>>>> 323c9896ec2db9867d959f42afdea3f6983ba087
 end
