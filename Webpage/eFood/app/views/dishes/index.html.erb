@@ -1,0 +1,8 @@
+<h3>Jai</h3>
+
+<% @dishes.each do |d| %>
+  <% if DishesTag.find_by(tag_id: 2, dish_id: d.id) %>
+    <%= d.name %>
+    <br>
+  <% end %>
+<% end %>
