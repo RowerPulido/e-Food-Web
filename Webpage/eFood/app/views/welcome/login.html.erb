@@ -1,30 +1,35 @@
-<%= render '/public/navbar' %>
-
+ <!-- Fondo de Aplicacion -->
 <div class='loginbg'>
-	<p class="text-center text-white" style="padding-top: 100px; font-family: 'Courier New'; font-size: 50px; font-weight: 100">COME DONDE QUIERAS</p>
-	<br>
-	<form style='margin-left: 33%; margin-right: 33%;padding-bottom: 125px;'>
-		<div class="login">
-			<div style="padding-left: 7%; padding-right: 7%;" align="center">
-				<br>
-				<h2 class="text-center text-white">INICIA SESIÓN</h2>
-				<br>
-   				<label class='login-fields'><b>Correo Electronico</b></label>
-   				<input class='login-fields' type="text" placeholder="Usuario" name="uname" style="color: black" required>
-   				<br>
-	    		<label class='login-fields'><b>Contraseña</b></label>
-   				<input class='login-fields' type="password" placeholder="Contraseña" name="psw" style="color: black" required>
-   				<br>
+	<p class="responsive-font responsive-font-title text-center text-white" style="padding-top: 70px; font-size: 70px;"">COME DONDE QUIERAS</p>
 
-   				<div class="login-fields" style="margin-top: 20px;">
-   					<span style="padding-right: 25%;">
-   						<input type="checkbox" checked="checked"> Recordarme?
-   					</span>
-		    		<button type="submit" class="orange btn btn-md" style="margin-left: 0px; margin-right: 0px;">Entrar</button>
-    			<p class="login-fields"><%= link_to "Crear cuenta", signup_path %></p>
-    			</div>
-    		</div>
+	 <!-- Inicio del formulario Inicio de Sesion -->
+	<form class='form-login responsive'>
+		<div class="login" align="center">
+			<h3 class="text-center text-white spacing">INICIA SESIÓN</h3>
+   			<label class='login-fields'><b>Correo Electronico</b></label>
+			<input class='login-fields' type="text" placeholder="Usuario" name="uname" style="color: black; margin-bottom: 25px;" required>
+    		<label class='login-fields'><b>Contraseña</b></label>   				
+    		<input class='login-fields' type="password" placeholder="Contraseña" name="psw" style="color: black" required>
+
+   			<div class="login-fields" style="margin-top: 20px;">
+   				<div style="float: left;">
+					<input type="checkbox" checked="checked"> Recordarme?
+				</div>
+
+				<div style="float: right; margin-left: 0px; margin-right: 0px;" class="responsive-small">
+					<%= link_to "Olvide Mi Contraseña", root_path, :style=>'color: #f47a14;' %>
+				</div>
+   			<!-- Padding para que "Crear cuenta" no se meta entre los botones, <br> para que "Crear cuenta" este centrado -->
+				<div style='padding-bottom: 70px;'><br>
+				<!-- Padding para que el boton de Facebook se muestre en linea -->
+					<div style="padding-right: 45px;">
+	    				<button type="submit" class="orange btn btn-md login-fields spacing margin" style="float: left;">Entrar</button>
+	    			</div>
+	    			<%= image_tag('facebook.png', style: 'height: 40px; float: right;', class: 'margin') %>
+	    		</div>
+
+	    			<%= link_to "Crear Cuenta", signup_path, :style=>'color: #f47a14;' %>
+	    	</div>
   		</div>
 	</form>
-	<br>
 </div>
