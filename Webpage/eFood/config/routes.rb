@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   get 'get/getDishesByTag', to: 'apis#get_dishes_by_tag_to_json'
   get 'get/getDishWithKitchenDishes', to: 'apis#get_dish_with_kitchen_dishes_to_json'
   get 'get/getCommentsByDish', to: 'apis#get_comments_by_dish_to_json'
+  get 'get/getEvaluationByDish', to: 'apis#get_evaluataion_by_dish_to_json'
+  post 'post/addEvaluation', to: 'apis#add_evaluation_to_json'
   post 'post/addClient', to: 'apis#add_client_to_json'
   post 'post/updClient', to: 'apis#add_client_to_json'
   post 'post/addSeller', to: 'apis#add_seller_to_json'

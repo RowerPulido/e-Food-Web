@@ -65,17 +65,39 @@ class ApisController < ApplicationController
     @json=update_comment
   end
   
+  def get_evaluataion_by_dish_to_json
+    @json=get_evaluataion_by_dish
+  end
+  
+  def add_evaluation_to_json
+    @json=add_evaluation
+  end
+  
+  def update_evaluation_to_json
+    @json=update_evaluation
+  end
+  
   private
   
   def get_dish_with_kitchen
     @json=Jbuilder.new
     if dish=Dish.find_by(id: params[:dish_id]) || dish=Dish.find_by(name: params[:dish_name]) 
+      sum=0;
+      n=0
+      dish.evaluations.each do |e|
+        n=n+1
+        sum+=e.calification
+      end
+      if n!=0
+        prom=sum/n
+      end
       @json.set! dish do
         @json.set! :status, 0
         @json.set! :id, dish.id
         @json.set! :name, dish.name
         @json.set! :preparation_time, dish.preparation_time
         @json.set! :price, dish.price
+        @json.set! :evaluation, prom
         @json.set! :Tags do
           @json.array! dish.tags do |dt|
             @json.set! :name, dt.name
@@ -150,7 +172,7 @@ class ApisController < ApplicationController
   
   def get_comments_by_dish
     @json=Jbuilder.new
-    if 
+    if dish=Dish.find_by(id: params[:dish_id]) || dish=Dish.find_by(name: params[:dish_name]) 
       @json.set! dish do
         @json.set! :status, 0
         @json.set! :name, dish.name
@@ -171,11 +193,80 @@ class ApisController < ApplicationController
   
   def add_comment
     @json=Jbuilder.new
-    comment=Comment.create(client_id: params[:client_id], dish_id: params[:dish_id], comment: params[:comment])
+    comment=Comment.new(client_id: params[:client_id], dish_id: params[:dish_id], comment: params[:comment])
     if comment.save
-      @json.set! :comment do
+      @json.set! comment do
         @json.set! :status, 0
         @json.set! :messege, 'Comment added'
+      end
+    else
+      @json.set! :error do
+        @json.set! :status, 1
+        @json.set! :message, "dish not found"
+      end
+    end
+  end
+  
+  def add_evaluation
+    @json=Jbuilder.new
+    evaluation=Evaluation.new(client_id: params[:client_id], dish_id: params[:dish_id], calification: params[:calification])
+    if evaluation.save
+      @json.set! evaluation do
+        @json.set! :status, 0
+        @json.set! :message, 'Save successful'
+      end
+    else
+      @json.set! :error do
+        @json.set! :status, 1
+        @json.set! :message, "dish not found"
+      end
+    end
+  end
+  
+  def update_evaluation
+    @json=Jbuilder.new
+    if dish=Dish.find_by(id: params[:dish_id]) || dish=Dish.find_by(name: params[:dish_name]) 
+      if e=dish.evaluations.find_by(client_id: params[:client_id])  
+        if e.update(calification: params[:calification_update])
+          @json.set! comments do
+            @json.set! :status, 0
+            @json.set! :message, "calification updated"
+          end
+        else
+          @json.set! :errors do
+            @json.set! :status, 1
+            @json.set! :message, "unknown error"
+          end
+        end
+      else
+        @json.set! :errors do
+          @json.set! :status, 1
+          @json.set! :message, "calification not found"
+        end
+      end
+    else
+      @json.set! :errors do
+        @json.set! :status, 1
+        @json.set! :message, "dish not found"
+      end
+    end
+  end
+  
+  def get_evaluataion_by_dish
+    @json=Jbuilder.new
+    if dish=Dish.find_by(id: params[:dish_id]) || dish=Dish.find_by(name: params[:dish_name]) 
+      sum=0;
+      n=0
+      dish.evaluations.each do |e|
+        n=n+1
+        sum+=e.calification
+      end
+      prom=sum/n
+      @json.set! dish do
+        @json.set! :status, 0
+        @json.set! :name, dish.name
+        @json.set! :Comments 
+        @json.set! :evaluation, prom
       end
     else
       @json.set! :error do
@@ -341,9 +432,19 @@ class ApisController < ApplicationController
         @json.set! :name, kitchen.name
         @json.set! :Dishes do
           @json.array! kitchen.dishes do |d|
+            sum=0;
+            n=0
+            d.evaluations.each do |e|
+              n=n+1
+              sum+=e.calification
+            end
+            if n!=0
+              prom=sum/n
+            end
             @json.set! :name, d.name
             @json.set! :preparation_time, d.preparation_time
             @json.set! :price, d.price
+            @json.set! :evaluation, prom
           end
         end
       end
@@ -639,10 +740,11 @@ class ApisController < ApplicationController
   def user_params
     params.permit(:email, :name, :last_name, :cellphone, :password)
   end
-<<<<<<< HEAD
-=======
+  
+  def user_dish_params
+    
+  end
 
->>>>>>> 155f2c24357e7ee511be29723e3debb1aaabf7e1
   def seller_params
     params.permit(:email, :name, :last_name, :cellphone, :password, :RFC, :CLABE)
   end
