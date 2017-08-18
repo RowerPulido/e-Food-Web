@@ -1,6 +1,7 @@
 # eFood Web App
 
 Este repositorio contiene el codigo de la App web
+
 ## Instrucciones
 Para hacer que funcione la aplicacion se deben instalar la PG y PGAmin en su computadora (Todo con fines locales)
 * Crear un usuario con derechos de superusuario en PGAdmin
