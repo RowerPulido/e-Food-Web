@@ -41,6 +41,7 @@ class ApisController < ApplicationController
   def get_kitchen_dishes_to_json
     @json=get_kitchen_dishes
   end
+  
   def get_kitchens_by_brand_to_json
     @json=get_kitchens_by_brand
   end
@@ -280,10 +281,12 @@ class ApisController < ApplicationController
     @json=Jbuilder.new
     brand=Brand.all
     @json.set! :brands do
-      @json.array! brand do |b|
-        @json.set! :status, 0
-        @json.set! :id, b.id
-        @json.set! :name, b.name
+      @json.set! :status, 0
+      @json.set! :Brands do
+        @json.array! brand do |b|
+          @json.set! :id, b.id
+          @json.set! :name, b.name
+        end
       end
     end
   end
@@ -293,8 +296,12 @@ class ApisController < ApplicationController
     brand=Brand.find_by(id: params[:brand_id])
     @json.set! :brand do
       @json.set! :status, 0
-      @json.set! :id, brand.id
-      @json.set! :name, brand.name
+      @json.set! :Brands do
+        @json.array! brand do |b|
+          @json.set! :id, brand.id
+          @json.set! :name, brand.name
+        end
+      end
     end
   end
   
@@ -400,35 +407,36 @@ class ApisController < ApplicationController
     end
   end
   
-  def get_seller_info 
-    @json=Jbuilder.new
-    if seller=Seller.find_by(id: params[:seller_id])
-      @json.set! seller do
-        @json.set! :id, seller_id
-        @json.set! seller.user do |u|
-          @json.set! :name, u.name
-          @json.set! :last_name, u.last_name
-          @json.set! :email, u.email
-          @json.set! :Kitchen do
-            @json.array! seller.kitchen do |k|
-              @json.set! :id, k.id
-              @json.set! :name, k.name
-            end
-          end
-          @json.set! :Brand do
-            #if 
-          end
-        end
-      end
-    else
-      
-    end
-  end
+  #def get_seller_info 
+  #  @json=Jbuilder.new
+  # if seller=Seller.find_by(id: params[:seller_id])
+  #    @json.set! seller do
+  #      @json.set! :id, seller_id
+  #      @json.set! seller.user do |u|
+  #        @json.set! :name, u.name
+  #        @json.set! :last_name, u.last_name
+  #        @json.set! :email, u.email
+  #        @json.set! :Kitchen do
+  #          @json.array! seller.kitchen do |k|
+  #            @json.set! :id, k.id
+  #          @json.set! :name, k.name
+  #         end
+  #        end
+  #        @json.set! :Brand do
+  #          #if 
+  #        end
+  #      end
+  #    end
+  #  else
+  #    
+  #  end
+  #end
   
   def get_kitchen_dishes
     @json=Jbuilder.new
     if kitchen=Kitchen.find_by(id: params[:kitchen_id]) || kitchen=Kitchen.find_by(name: params[:kitchen_name])
       @json.set! :kitchen do
+        @json.set! :status, 0
         @json.set! :name, kitchen.name
         @json.set! :Dishes do
           @json.array! kitchen.dishes do |d|
@@ -484,16 +492,26 @@ class ApisController < ApplicationController
   
   def get_dishes_by_tag
     @json=Jbuilder.new
-    if tag=Tag.find_by(id: params[:tag_id])
+    if tag=Tag.find_by(id: params[:tag_id]) || tag=Tag.find_by(name: params[:tag_name])
       @json.set! :status, 0
       @json.set! :Tag do 
         @json.set! :name, tag.name
         @json.set! :Dishes do 
           @json.array! tag.dishes do |td|
+            sum=0;
+            n=0
+            td.evaluations.each do |e|
+              n=n+1
+              sum+=e.calification
+            end
+            if n!=0
+              prom=sum/n
+            end
             @json.set! :name, td.name
             @json.set! :preparation_time, td.preparation_time
             @json.set! :price, td.price
             @json.set! :kitchen_name, td.kitchen.name
+            @json.set! :evaluation, prom
           end
         end
       end
@@ -541,7 +559,7 @@ class ApisController < ApplicationController
     if user.cellphone.length>10 || user.cellphone.length<7
       @json.set! :errors do
         errors = true
-        error_name.push(["Phone number invalid",4])
+        error_name.push(["Invalid phone number",4])
         @json.set! :messages, "Error"
       end
     end
@@ -611,10 +629,9 @@ class ApisController < ApplicationController
         end
       else
         User.update(ouser.id, name: params[:name], email: params[:email], last_name: params[:last_name], cellphone: params[:cellphone], password: params[:password])
-        
         @json.category do
         @json.set! :status, 0
-        @json.set! :reason, 'Nice ' + user.name.to_s
+        @json.set! :reason, 'User updated'
         end
       end
     end
@@ -730,8 +747,8 @@ class ApisController < ApplicationController
         s = Seller.find_by(user_id: ouser.id)
         Seller.update(s.id, CLABE: params[:CLABE])
         @json.category do
-        @json.set! :status, 0
-        @json.set! :reason, 'Nice ' + user.name.to_s
+          @json.set! :status, 0
+          @json.set! :reason, 'Seller updated'
         end
       end
     end
@@ -746,9 +763,6 @@ class ApisController < ApplicationController
   end
 
   def seller_params
-    params.permit(:email, :name, :last_name, :cellphone, :password, :RFC, :CLABE)
-  end
-  def brand_params
-    params.permit(:name)
+    params.permit(:Email, :Name, :last_name, :cellphone, :password, :RFC, :CLABE)
   end
 end
